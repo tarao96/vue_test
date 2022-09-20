@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>プルダウンメニュー</title>
+</head>
+<body>
+    <div id="app">
+        <header id="header">
+            <nav id="nav">
+                <h1>Site Title</h1>
+                <ul>
+                    <li 
+                        v-for="item in items" 
+                        :key="item">
+                        <a 
+                            :href="item.url"
+                            v-if="!item.children">
+                            {{ item.name }}
+                        </a>
+                        <span
+                            v-else
+                            @click="dropdown(item.children)">
+                            {{ item.name }}
+                            <ul 
+                                class="dropdown"
+                                v-if="active === item.children"
+                                >
+                                <li 
+                                    v-for="child in item.children"
+                                    :key="child">
+                                    <a :href="child.url">{{ child.name }}</a>
+                                </li>
+                            </ul>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+            <div id="section_bar"></div>
+        </header>
+        <main>
+            <div>
+                <button @click="isShown = !isShown">表示切り替え</button>
+            </div>
+
+            <transition name="vshow">
+                <p v-show="isShown">
+                    v-show="isShown"
+                </p>
+            </transition>
+            <ul>
+                <li 
+                    class="list" 
+                    v-for="list in lists" 
+                    :key="list"
+                    @click="scrollList1"
+                    :id="'list' + list.id">
+                    {{ list.name }}
+                </li>
+            </ul>
+            <p>D3.jsを実装してみる</p>
+            <p>フロントエンド勉強中</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Lagopus_muta_japonica_Mount_Tsubakuro.jpg/320px-Lagopus_muta_japonica_Mount_Tsubakuro.jpg" class="slideshow">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Pair_of_mandarin_ducks.jpg/320px-Pair_of_mandarin_ducks.jpg" class="slideshow fadeout">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Vicu%C3%B1a_-_Chimborazo%2C_Ecuador.jpg/320px-Vicu%C3%B1a_-_Chimborazo%2C_Ecuador.jpg" class="slideshow fadeout">
+        </main>
+        <!-- <svg width="960" height="500"></svg> -->
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>
